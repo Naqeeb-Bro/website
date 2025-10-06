@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Talent</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #000000;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        #toggle-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            /* Moved to top-right */
+            left: auto;
+            z-index: 1001;
+            background: #2084e1;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            display: block; 
+            /* Always visible */
+        }
+
+        nav {
+            width: 250px;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            /* Hidden by default */
+            z-index: 1000;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        nav.open {
+            left: 0;
+            /* Slide in */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 15px 0;
+        }
+
+        nav ul li a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            color: #2084e1;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2084e1;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            margin-top: 20px;
+        }
+
+        .search {
+            width: 100%;
+            background: #000000;
+            border: none;
+            padding: 10px;
+            color: #ffffff;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        main {
+            margin-left: 0;
+            /* No margin when sidebar closed */
+            padding: 20px;
+            flex: 1;
+            transition: margin-left 0.3s ease;
+            width: 100%;
+        }
+
+        main.nav-open {
+            margin-left: 250px;
+            /* Shift when sidebar open */
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h1,
+        h2 {
+            color: #2084e1;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            color: #ff0000;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+        }
+
+        input,
+        textarea,
+        button {
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #2084e1;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Image gallery styles for Talent and Services */
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .image-gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #2084e1;
+            transition: transform 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(0.05);
+        }
+
+        .image-home {
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.image-home img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  animation: moveDown 4s ease-in-out infinite alternate; /* yahan animation apply */
+}
+
+/* 🔻 ye likhna CSS ke end me */
+@keyframes moveDown {
+  0% { transform: translateY(-10px); }
+  100% { transform: translateY(10px); }
+}
+
+
+
+        /* Mobile responsiveness - sidebar overlay on small screens */
+        @media (max-width: 768px) {
+            nav {
+                width: 80%;
+                /* Wider on mobile for better touch */
+                left: -80%;
+            }
+
+            nav.open {
+                left: 0;
+            }
+
+            main.nav-open {
+                margin-left: 0;
+                /* No shift on mobile, use overlay */
+            }
+
+            #toggle-menu {
+                right: 10px;
+                /* Top-right on mobile */
+                left: auto;
+                top: 10px;
+            }
+
+            .image-gallery img {
+                width: 100%;
+                max-width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button id="toggle-menu">⋮</button> <!-- 3 dots toggle button - now top-right -->
+
+    <nav id="sidebar">
+        <div class="logo">MEDIA TALENT</div>
+        <ul>
+            <li><a href="#" data-page="home" class="active">Home</a></li>
+            <li><a href="#" data-page="about">About Us</a></li>
+            <li><a href="#" data-page="services">Our Services</a></li>
+            <li><a href="#" data-page="clientele">Clientele</a></li>
+            <li><a href="#" data-page="talent">Talent</a></li>
+            <li><a href="#" data-page="contact">Contact Us</a></li>
+        </ul>
+        <div class="search-container">
+            <input type="text" class="search" placeholder="SEARCH HERE">
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <header>
+                <h1>Media Talent</h1>
+            </header>
+            <section>
+                <p>Welcome to Media Talent. Explore our services and team.</p>
+                <p>Media Talentis an agency that specializes in management of influencers, offering brands leading-edge, innovative and efficient ways to utilize influencers for the promotion of their products and services.</p>
+            </section>
+        </div>
+        <div class="image-home">
+            <img src="home.png" alt="Services Image 1">
+        </div>
+
+        <!-- About Us Section -->
+        <div id="about" class="section">
+            <header>
+                <h1>About Us</h1>
+            </header>
+            <section>
+                <h2>. : about us : .</h2>
+                <p>We bring to the table extensive knowledge and in-depth understanding of influencer marketing. We
+                    disregard hurdles. With us, you will rise to new heights, as we empty the path in front of you like
+                    a Media Talent.</p>
+                <h3>Your Influence, Our Strategy</h3>
+                <p>We empower influencers and elevate brands.</p>
+                <h2>We’re sharp brands creators open for any new collabs</h2>
+                <p>Grow brands through bold and strategic creative, focused on searching new ways to showcase user
+                    content on digital support and envisioning the future arts.</p>
+                <h3>High Standard</h3>
+                <p>Grow brands through bold and strategic creative, focused on searching new ways to showcase user
+                    content on digital support and envisioning the future arts.</p>
+                <p>Contact Us or Send An Email to info@mediatalent.com</p>
+                <h3>Video</h3>
+                <p>Trusted website design agency</p>
+                <h2>Get Now Great Design Solution</h2>
+                <p>We combine strategy with marketing, design Analysis of the current business model, assessment of the
+                    company’s compete activeness and market position, financial condition, as well as all their
+                    minimization in the medium long-term prospects.</p>
+                <p>Digital Market Expert 100%</p>
+                <h3>Leonard Heizer CEO</h3>
+                <ul>
+                    <li>13 years experience</li>
+                    <li>00K Projects Completed</li>
+                    <li>00 Honorable Award</li>
+                    <li>00K Satisfied Customers</li>
+                    <li>00 Years Great Experience</li>
+                </ul>
+                <h2>Check Our Awards and Achievement</h2>
+                <table>
+                    <tr>
+                        <th>Year</th>
+                        <th>Award</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr>
+                        <td>2014</td>
+                        <td>Awards animation quality (02)</td>
+                        <td>This Awards Provide from govt.bd</td>
+                    </tr>
+                    <tr>
+                        <td>2014</td>
+                        <td>Site of the day (05)</td>
+                        <td>This Awards Provide from govt.bd</td>
+                    </tr>
+                    <tr>
+                        <td>2018</td>
+                        <td>Best Product Design (01)</td>
+                        <td>This Awards Provide from govt.bd</td>
+                    </tr>
+                    <tr>
+                        <td>2020</td>
+                        <td>Best SEO of the Year (03)</td>
+                        <td>This Awards Provide from govt.bd</td>
+                    </tr>
+                </table>
+                <h2>SIMPLE WORK PROCESS</h2>
+                <p>see our working process how we manage</p>
+                <ul>
+                    <li>Select our Service: Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod.</li>
+                    <li>Contact Worker Now: Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod.</li>
+                    <li>Discourse Detail Project: Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod.</li>
+                    <li>Finalize The Work: Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod.</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Our Services Section -->
+        <div id="services" class="section">
+            <header>
+                <h1>Our Services</h1>
+            </header>
+            <section>
+                <h2>## Our Services</h2>
+                <h3>Productions</h3>
+                <ul>
+                    <li>Fashion Shoots</li>
+                    <li>DVC</li>
+                    <li>TVC</li>
+                </ul>
+                <h2>Intuitive For Web Solution</h2>
+                <p>Grow brands through bold and strategic creative, focused on searching new ways to showcase user
+                    content on digital support.</p>
+                <h2>Make Your Service</h2>
+                <p>For each business, we take a bespoke approach to developing change within the organization, often
+                    with the common goal.</p>
+                <h3>Creative Solution</h3>
+                <p>Pellentesque sit amet urna justo. Fusce velit nibh commodo iaculis vestibulum condimentum.</p>
+                <h3>Figma Design</h3>
+                <p>Pellentesque sit amet urna justo. Fusce velit nibh commodo iaculis vestibulum condimentum.</p>
+                <h3>Wireframing</h3>
+                <p>Pellentesque sit amet urna justo. Fusce velit nibh commodo iaculis vestibulum condimentum.</p>
+                <h2>Trusted for Agency</h2>
+                <ul>
+                    <li>What can we do for you with Figma? Through our years of experience, we’ve also learned that
+                        while each channel has its own set of advantages, they all work best when strategically paired
+                        with other channels.</li>
+                    <li>What is the standard size of business cards? Through our years of experience, we’ve also learned
+                        that while each channel has its own set of advantages, they all work best when strategically
+                        paired with other channels.</li>
+                    <li>What can we do you with Adobe Figma? Through our years of experience, we’ve also learned that
+                        while each channel has its own set of advantages, they all work best when strategically paired
+                        with other channels.</li>
+                    <li>Do you create one single full home page? Through our years of experience, we’ve also learned
+                        that while each channel has its own set of advantages, they all work best when strategically
+                        paired with other channels.</li>
+                </ul>
+                <h2>Services we’re providing to our customers</h2>
+                <p>Here are many variations of simply free text passages of available but the majority have suffered
+                    alteration in some form, by injected hum randomized words which don't slightly.</p>
+                <h2>We Bring a Core Team Of Experts World</h2>
+                <ul>
+                    <li>Leslie Alexander - Web Designer</li>
+                    <li>Theresa Webb - Sr. Marketer</li>
+                    <li>Dianne Russell - Area Manager</li>
+                </ul>
+
+                <!-- Services Images Gallery (Minimum 6 images - assume files in 'services/' folder) -->
+                <h2>Our Services Gallery</h2>
+                <div class="image-gallery">
+                    <img src="services/2-20influencer-20management.jpg" alt="Services Image 1">
+                    <img src="services/3-20communication.jpg" alt="Services Image 2">
+                    <img src="services/5-20Digital-20marketing.jpg" alt="Services Image 3">
+                    <img src="services/6-20fashion.jpg" alt="Services Image 4">
+                    <img src="services/Activations-204.jpg" alt="Services Image 5">
+                    <img src="services/marketing-20agency.jpg" alt="Services Image 6">
+
+                </div>
+            </section>
+        </div>
+
+        <!-- Clientele Section -->
+        <div id="clientele" class="section">
+            <header>
+                <h1>Clientele</h1>
+            </header>
+            <section>
+                <h2>. : Brands we have served : .</h2>
+                <h3>## Check out our recent campaigns</h3>
+                <table>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Campaign Link</th>
+                    </tr>
+                    <tr>
+                        <td>FlightPay</td>
+                        <td><a href="https://www.instagram.com/reel/DAoh27RImLS/?igsh=MXRkZGZvYmtteWhl"
+                                target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Lipton</td>
+                        <td><a href="https://www.instagram.com/reel/DCbtn_StAD8/?igsh=QkFLLW4tbzBKUQ%3D%3D"
+                                target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Spotify</td>
+                        <td><a href="https://www.instagram.com/p/Cwz6nF3xISq/" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>EasyPaisa</td>
+                        <td><a href="https://www.instagram.com/p/Cx0USE4tawF/" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Fishry</td>
+                        <td><a href="https://www.instagram.com/p/C3kXYydxSlw/" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Muzz</td>
+                        <td><a href="https://www.instagram.com/p/C9xQFupIXjs/" target="_blank">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>PUBG</td>
+                        <td><a href="https://www.instagram.com/reel/DFiMRESqBZI/?igsh=QkFhLTVoaTVzTQ%3D%3D"
+                                target="_blank">View</a></td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <!-- Talent Section -->
+        <div id="talent" class="section">
+            <header>
+                <h1>Talent</h1>
+            </header>
+            <section>
+                <h2>## Exclusive Talent</h2>
+                <h3>. : Meet the core team : .</h3>
+                <ul>
+                    <li>Saad Ahmad - Chief Executive Officer (CEO)</li>
+                    <li>Haziq Ali Khan - Head of Growth</li>
+                    <li>Syed Saad - Creative Director</li>
+                </ul>
+
+                <!-- Talent Images Gallery (Minimum 6 images - assume files in 'talent/' folder) -->
+                <h2>Talent Gallery</h2>
+                <div class="image-gallery">
+                    <img src="talent/Nida-20rehman-202.jpg" alt="Talent Image 1">
+                    <img src="talent/picture/AroobJatoi.jpg" alt="Talent Image 2">
+                    <img src="talent/picture/BaalaajKhan.jpeg" alt="Talent Image 2">
+                    <img src="talent/picture/TalatKhattak.jpeg" alt="Talent Image 2">
+                    <img src="talent/picture/uzma.png" alt="Talent Image 2">
+                    <img src="talent/picture/ZarnabLaraib.jpeg" alt="Talent Image 2">
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Us Section -->
+        <div id="contact" class="section">
+            <header>
+                <h1>Contact Us</h1>
+            </header>
+            <section>
+                <p>Have Questions? Have any projects in mind? Get in touch with us!</p>
+                <form>
+                    <input type="text" placeholder="Your Name">
+                    <input type="email" placeholder="Your Email">
+                    <textarea placeholder="Your Message"></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript for sidebar toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('toggle-menu');
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            toggleBtn.addEventListener('click', function () {
+                sidebar.classList.toggle('open');
+                mainContent.classList.toggle('nav-open');
+            });
+
+            // Close sidebar if clicking outside (optional enhancement)
+            document.addEventListener('click', function (e) {
+                if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    mainContent.classList.remove('nav-open');
+                }
+            });
+
+            // Page navigation (existing)
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const sections = document.querySelectorAll('main .section');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Remove active class from all links and sections
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+
+                    // Add active to clicked link
+                    this.classList.add('active');
+
+                    // Show corresponding section
+                    const page = this.getAttribute('data-page');
+                    const targetSection = document.getElementById(page);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                    }
+
+                    // Auto-close sidebar after navigation (optional, for better UX)
+                    sidebar.classList.remove('open');
+                    mainContent.classList.remove('nav-open');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
