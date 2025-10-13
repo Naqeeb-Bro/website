@@ -1,552 +1,551 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Talent</title>
+    <title>Media Talent - Influencer Management Agency</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            display: block;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
             overflow-x: hidden;
         }
 
-        /* Navbar styles for all screens */
+        /* Navigation */
         nav {
-            background-color: #000000;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: fixed;
             width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1rem 5%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
         }
 
         nav ul {
             list-style: none;
-            padding: 0;
             display: flex;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 18px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        nav ul li a:hover,
-        nav ul li a.active {
-            color: #2084e1;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2084e1;
-        }
-
-        /* Hide toggle button for all screens */
-        #toggle-menu {
-            display: none;
-        }
-
-        main {
-            padding: 40px 20px;
-            flex: 1;
-            width: 80%;
-            margin: 0 auto;
-            max-width: 1200px;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        section {
-            margin-bottom: 50px;
-        }
-
-        h1 {
-            color: #006efff7;
-            font-size: 36px;
-        }
-
-        h2 {
-            color: #006efff7;
-            font-size: 28px;
-        }
-
-        h3 {
-            color: #006efff7;
-            font-size: 24px;
-        }
-
-        p {
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        ul {
-            list-style: disc;
-            padding-left: 20px;
-        }
-
-        ul li {
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        ul li a:hover {
-            color: #ff0000;
-        }
-
-        .home-button {
-            margin: 15px 10px;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            background: linear-gradient(45deg, #2084e1, #ff0000);
-            color: #fff;
-            cursor: pointer;
-            font-size: 18px;
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-
-        .home-button:hover {
-            transform: scale(1.05);
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 500px;
-        }
-
-        input,
-        textarea {
-            margin: 15px 0;
-            padding: 12px;
-            border: 2px solid #333;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            margin: 15px 0;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            background: linear-gradient(45deg, #2084e1, #ff0000);
-            color: #fff;
-            cursor: pointer;
-            font-size: 18px;
-            transition: transform 0.3s;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 2px solid #333;
-            padding: 12px;
-            text-align: left;
-            font-size: 18px;
-        }
-
-        .clientele-table img {
-            width: 100px;
-            height: auto;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
-        .clientele-table a {
-            color: #ffffff;
-            text-decoration: none;
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        .clientele-table a:hover {
-            color: #2084e1;
-        }
-
-        .image-gallery {
-            display: flex;
+            justify-content: center;
+            gap: 2rem;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 30px;
         }
 
-        .image-gallery img {
-            width: 250px;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 3px solid #2084e1;
-            transition: transform 0.5s ease;
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
         }
 
-        .image-gallery img:hover {
-            transform: scale(1.2);
+        nav a:hover {
+            color: #ff6b6b;
         }
 
-        .image-home {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .tagline {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            animation: fadeInUp 1s ease 0.4s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 10%;
+            background: #f8f9fa;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #667eea;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Productions Section */
+        .productions {
+            padding: 5rem 10%;
+            background: #fff;
+        }
+
+        .productions h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #667eea;
+        }
+
+        .production-list {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .production-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 3rem;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .production-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Services Gallery */
+        .services-gallery {
+            padding: 5rem 10%;
+            background: #f8f9fa;
+        }
+
+        .services-gallery h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #667eea;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
             overflow: hidden;
             border-radius: 15px;
-            margin: 30px auto;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
         }
 
-        .image-home img {
-            width: 100%;
-            height: auto;
-            max-height: 600px;
-            object-fit: cover;
-            border-radius: 15px;
-            animation: moveDown 4s ease-in-out infinite alternate;
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
 
-        @keyframes moveDown {
-            0% { transform: translateY(-10px); }
-            100% { transform: translateY(10px); }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
         }
 
-        /* Enhanced mobile responsiveness */
-        @media (max-width: 400px) {
-            nav {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            nav ul li {
-                margin: 0 10px;
-            }
-
-            nav ul li a {
-                font-size: 16px;
-            }
-
-            .image-gallery img {
-                width: 100%;
-                max-width: 150px;
-                height: 150px;
-            }
-
-            main {
-                width: 100%;
-                padding: 15px;
-            }
-
-            .image-home {
-                width: 100%;
-            }
-
-            .image-home img {
-                height: auto;
-                max-height: 300px;
-            }
-
-            h1 { font-size: 28px; }
-            h2 { font-size: 22px; }
-            h3 { font-size: 18px; }
-            p, ul li, th, td { font-size: 16px; }
-            .home-button { font-size: 16px; padding: 10px 15px; }
-            .clientele-table img { width: 80px; }
+        /* Clientele */
+        .clientele {
+            padding: 5rem 10%;
+            background: #fff;
         }
 
-        @media (max-width: 320px) {
-            .home-button { width: 100%; margin: 10px 0; }
-            .image-gallery { justify-content: center; }
-            .clientele-table img { width: 60px; }
-            .clientele-table td { padding: 10px; }
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-            nav ul li {
-                margin: 5px 0;
-            }
-        }
-
-        /* Footer styles */
-        footer {
-            background-color: #000000;
-            color: #ffffff;
+        .clientele h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
+            color: #667eea;
         }
 
-        .social-links a {
-            color: #ffffff;
-            margin: 0 15px;
-            font-size: 24px;
+        .clientele h3 {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #666;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .brand-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .brand-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .campaign-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .campaign-links a {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: background 0.3s;
         }
 
-        .social-links a:hover {
-            color: #2084e1;
+        .campaign-links a:hover {
+            background: #764ba2;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 5rem 10%;
+            background: #f8f9fa;
+        }
+
+        .team h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #667eea;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .team-member p {
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 10%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            font-size: 1.2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item strong {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p, .tagline {
+                font-size: 1.2rem;
+            }
+
+            .about h2, .productions h2, .services-gallery h2, .clientele h2, .team h2, .contact h2 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
-
 <body>
-    <nav id="sidebar">
-        <!-- <div class="logo">MEDIA TALENT</div> -->
+    <nav>
         <ul>
-            <li><a href="#" data-page="home" class="active">Home</a></li>
-            <li><a href="#" data-page="clientele">Clientele</a></li>
-            <li><a href="#" data-page="talent">Talent</a></li>
-            <li><a href="#" data-page="contact">Contact Us</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#productions">Productions</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#clientele">Clientele</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-        
     </nav>
 
-    <main id="main-content">
-        <div id="home" class="section active">
-            <header>
-                <h1>Media Talent</h1>
-            </header>
-            <section>
-                <p>Welcome to Media Talent. Explore our services and team.</p>
-                <p>Media Talent is an agency that specializes in management of influencers, offering brands leading-edge, innovative, and efficient ways to utilize influencers for the promotion of their products and services.</p>
-            </section>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Media Talent</h1>
+            <p>Welcome to Media Talent. Explore our services and team.</p>
+            <div class="tagline">Your Influence, Our Strategy</div>
+        </div>
+    </section>
 
-            <div class="image-home">
-                <img src="home.png" alt="Services Image 1">
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>Media Talent is an agency that specializes in management of influencers, offering brands leading-edge, innovative, and efficient ways to utilize influencers for the promotion of their products and services.</p>
+            <p>We bring to the table extensive knowledge and in-depth understanding of influencer marketing. We disregard hurdles. With us, you will rise to new heights as we clear the path ahead like a Media Talent.</p>
+        </div>
+    </section>
+
+    <section id="productions" class="productions">
+        <h2>Productions</h2>
+        <div class="production-list">
+            <div class="production-item">Fashion Shoots</div>
+            <div class="production-item">DVC</div>
+            <div class="production-item">TVC</div>
+        </div>
+    </section>
+
+    <section id="services" class="services-gallery">
+        <h2>Our Services</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+            <div class="gallery-item"></div>
+        </div>
+    </section>
+
+    <section id="clientele" class="clientele">
+        <h2>Clientele</h2>
+        <h3>Brands We Have Served</h3>
+        <div class="brands-grid">
+            <div class="brand-card">
+                <h4>FlightPay</h4>
+                <div class="campaign-links">
+                    <a href="https://www.instagram.com/reel/DCbtn_StAD8/?igsh=QkFLLW4tbzBKUQ%3D%3D" target="_blank">Campaign 1</a>
+                    <a href="https://www.instagram.com/p/Cwz6nF3xISq/" target="_blank">Campaign 2</a>
+                    <a href="https://www.instagram.com/p/Cx0USE4tawF/" target="_blank">Campaign 3</a>
+                    <a href="https://www.instagram.com/p/C3kXYydxSlw/" target="_blank">Campaign 4</a>
+                    <a href="https://www.instagram.com/p/C9xQFupIXjs/" target="_blank">Campaign 5</a>
+                    <a href="https://www.instagram.com/reel/DFiMRESqBZI/?igsh=QkFhLTVoaTVzTQ%3D%3D" target="_blank">Campaign 6</a>
+                </div>
             </div>
-
-            <section>
-                <button class="home-button" onclick="document.getElementById('about-us-content').scrollIntoView({ behavior: 'smooth' });">About Us</button>
-                
-                
-
-                <div id="about-us-content">
-                    <p>We bring to the table extensive knowledge and in-depth understanding of influencer marketing. We disregard hurdles. With us, you will rise to new heights as we clear the path ahead like a Media Talent.</p>
-                    <h3>Your Influence, Our Strategy</h3>
-                    
-                    
-                </div>
-         <button class="home-button" onclick="document.getElementById('services-content').scrollIntoView({ behavior: 'smooth' });">Our Services</button>
-                <div id="services-content">
-                    
-                    <h3>Productions</h3>
-                    <ul>
-                        <li>Fashion Shoots</li>
-                        <li>DVC</li>
-                        <li>TVC</li>
-                    </ul>
-                    
-        
-                </div>
-
-                <div id="services-gallery">
-                    
-                    <div class="image-gallery">
-                        <img src="services/2-20influencer-20management.jpg" alt="Services Image 1">
-                        <img src="services/3-20communication.jpg" alt="Services Image 2">
-                        <img src="services/5-20Digital-20marketing.jpg" alt="Services Image 3">
-                        <img src="services/6-20fashion.jpg" alt="Services Image 4">
-                        <img src="services/Activations-204.jpg" alt="Services Image 5">
-                        <img src="services/marketing-20agency.jpg" alt="Services Image 6">
-                    </div>
-                </div>
-            </section>
         </div>
+    </section>
 
-        <div id="about" class="section">
-            <header>
-                <h1>About Us</h1>
-            </header>
-            <section>
-                <!-- Content moved to home -->
-            </section>
+    <section id="team" class="team">
+        <h2>Meet the Core Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <h3>Saad Ahmad</h3>
+                <p>Chief Executive Officer (CEO)</p>
+            </div>
+            <div class="team-member">
+                <h3>Haziq Ali Khan</h3>
+                <p>Head of Growth</p>
+            </div>
+            <div class="team-member">
+                <h3>Syed Saad</h3>
+                <p>Creative Director</p>
+            </div>
         </div>
+    </section>
 
-        <div id="services" class="section">
-            <header>
-                <h1>Our Services</h1>
-            </header>
-            <section>
-                <!-- Content moved to home -->
-            </section>
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <strong>📍 Location</strong>
+                <span>Johar Town, Lahore</span>
+            </div>
+            <div class="contact-item">
+                <strong>📞 Phone</strong>
+                <span>+92 339 0897051</span>
+            </div>
+            <div class="contact-item">
+                <strong>📧 Email</strong>
+                <span>mediatalent.com</span>
+            </div>
         </div>
-
-        <div id="clientele" class="section">
-            <header>
-                <h1>Clientele</h1>
-            </header>
-            <section>
-                <h3> Brands We Have Served </h3>
-                <!-- <h3>## Check Out Our Recent Campaigns</h3> -->
-                <table class="clients-table">
-                    <tr>
-                        <th>Images</th>
-                        <th>Brand</th>
-                        <th>Campaign Link</th>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="FlightPay Image"></td>
-                        <td>FlightPay</td>
-                        <td><a href="https://www.instagram.com/reel/DAoh27RImLS/?igsh=MXRkZGZvYmtteWhl" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="Lipton Image"></td>
-                        <td>Lipton</td>
-                        <td><a href="https://www.instagram.com/reel/DCbtn_StAD8/?igsh=QkFLLW4tbzBKUQ%3D%3D" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="Spotify Image"></td>
-                        <td>Spotify</td>
-                        <td><a href="https://www.instagram.com/p/Cwz6nF3xISq/" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="EasyPaisa Image"></td>
-                        <td>EasyPaisa</td>
-                        <td><a href="https://www.instagram.com/p/Cx0USE4tawF/" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="Fishry Image"></td>
-                        <td>Fishry</td>
-                        <td><a href="https://www.instagram.com/p/C3kXYydxSlw/" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="Muzz Image"></td>
-                        <td>Muzz</td>
-                        <td><a href="https://www.instagram.com/p/C9xQFupIXjs/" target="_blank">View</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="" alt="PUBG Image"></td>
-                        <td>PUBG</td>
-                        <td><a href="https://www.instagram.com/reel/DFiMRESqBZI/?igsh=QkFhLTVoaTVzTQ%3D%3D" target="_blank">View</a></td>
-                    </tr>
-                </table>
-            </section>
-        </div>
-
-        <div id="talent" class="section">
-            <header>
-                <h1>Talent</h1>
-            </header>
-            <section>
-                
-                <!-- <h2>Talent Gallery</h2> -->
-                <div class="image-gallery">
-                    <img src="" alt="Talent Image 1">
-                    <img src="" alt="Talent Image 2">
-                    <img src="talent/picture/BaalaajKhan.jpeg" alt="Talent Image 3">
-                    <img src="" alt="Talent Image 4">
-                    <img src="" alt="Talent Image 5">
-                    <img src="" alt="Talent Image 6">
-                </div>
-            </section>
-        </div>
-
-        <div id="contact" class="section">
-            <header>
-                <h1>Contact Us</h1>
-            </header>
-            <section>
-                <!-- <p>Have questions? Have any projects in mind? Get in touch with us!</p> -->
-                <!-- <form>
-                    <input type="text" placeholder="Your Name">
-                    <input type="email" placeholder="Your Email">
-                    <textarea placeholder="Your Message"></textarea>
-                    <button type="submit">Send Message</button>
-                </form> -->
-                
-                <!-- <h2>Exclusive Talent</h2> -->
-                <h3> Meet the Core Team </h3>
-                <ul>
-                    <li>Saad Ahmad - Chief Executive Officer (CEO)</li>
-                    <li>Haziq Ali Khan - Head of Growth</li>
-                    <li>Syed Saad - Creative Director</li>
-                    <div class="image-gallery">
-                    <img src="" alt="Talent Image 1">
-                    <img src="" alt="Talent Image 2">
-                    <img src="talent/picture/BaalaajKhan.jpeg" alt="Talent Image 3">
-                    
-                </div>
-                </ul>
-            </section>
-            <p>Location : Johar Town, Lahore</p>
-
-                  <p> Phone: +92 339 0897051</p>
-
-                  <p>Email : mediatalent.com</p>
-        </div>
-    </main>
+    </section>
 
     <footer>
-        <div class="social-links">
-            
-            <a href="https://instagram.com" target="_blank">Instagram</a>
-        </div>
         <p>&copy; 2025 Media Talent. All rights reserved.</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const navLinks = document.querySelectorAll('nav ul li a');
-            const sections = document.querySelectorAll('main .section');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    sections.forEach(s => s.classList.remove('active'));
-                    this.classList.add('active');
-                    const page = this.getAttribute('data-page');
-                    const targetSection = document.getElementById(page);
-                    if (targetSection) {
-                        targetSection.classList.add('active');
-                    }
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
             });
         });
+
+        // Add scroll animation for sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Make hero section always visible
+        document.querySelector('.hero').style.opacity = '1';
+        document.querySelector('.hero').style.transform = 'translateY(0)';
     </script>
 </body>
-
 </html>
